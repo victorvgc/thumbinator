@@ -1,4 +1,6 @@
-package com.carvalho.thumbinator.ui.theme
+@file:Suppress("DEPRECATION")
+
+package com.carvalho.thumbinator.core.ui.theme
 
 import android.app.Activity
 import android.os.Build

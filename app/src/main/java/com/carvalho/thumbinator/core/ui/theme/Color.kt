@@ -1,4 +1,4 @@
-package com.carvalho.thumbinator.ui.theme
+package com.carvalho.thumbinator.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
