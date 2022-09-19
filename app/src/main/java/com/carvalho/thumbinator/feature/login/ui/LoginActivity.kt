@@ -1,6 +1,7 @@
 package com.carvalho.thumbinator.feature.login.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -46,7 +47,9 @@ class LoginActivity : ComponentActivity() {
                                 userTextMutableState = viewModel.userState,
                                 pwdTextMutableState = viewModel.pwdState,
                                 viewModel::doLogin,
-                                viewModel::registerUser
+                                viewModel::registerUser,
+                                viewModel::resetPassword,
+                                viewModel::cancelResetPassword
                             )
                         }
                         is BaseState.Failure -> {
@@ -56,7 +59,9 @@ class LoginActivity : ComponentActivity() {
                                 userTextMutableState = viewModel.userState,
                                 pwdTextMutableState = viewModel.pwdState,
                                 viewModel::doLogin,
-                                viewModel::registerUser
+                                viewModel::registerUser,
+                                viewModel::resetPassword,
+                                viewModel::cancelResetPassword
                             )
                         }
                         is BaseState.Loading -> {
@@ -66,12 +71,18 @@ class LoginActivity : ComponentActivity() {
                                 userTextMutableState = viewModel.userState,
                                 pwdTextMutableState = viewModel.pwdState,
                                 viewModel::doLogin,
-                                viewModel::registerUser
+                                viewModel::registerUser,
+                                viewModel::resetPassword,
+                                viewModel::cancelResetPassword
                             )
                         }
                         is BaseState.Success -> {
                             // todo: start home screen
-                            LoadingScreen("Login Successful")
+                            if (currentState.data.isReset) {
+                                Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
+                            } else {
+                                LoadingScreen("Login Successful")
+                            }
                         }
                     }
                 }
@@ -93,6 +104,6 @@ fun DefaultPreview() {
             mutableStateOf("")
         }
 
-        LoginScreen(false, null, user, pwd, { _, _ -> }, { _, _ -> })
+        LoginScreen(false, null, user, pwd, { _, _ -> }, { _, _ -> }, {}, {})
     }
 }

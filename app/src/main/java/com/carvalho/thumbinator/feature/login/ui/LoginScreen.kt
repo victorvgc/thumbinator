@@ -10,6 +10,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -34,7 +35,9 @@ fun LoginScreen(
     userTextMutableState: MutableState<String>,
     pwdTextMutableState: MutableState<String>,
     doLogin: (user: String, pwd: String) -> Unit,
-    registerUser: (user: String, pwd: String) -> Unit
+    registerUser: (user: String, pwd: String) -> Unit,
+    resetPassword: (email: String) -> Unit,
+    onResetPasswordDialogDismiss: () -> Unit
 ) {
     val (usernameField, passwordField) = FocusRequester.createRefs()
 
@@ -46,6 +49,10 @@ fun LoginScreen(
         }
         val pwd = remember {
             pwdTextMutableState
+        }
+
+        val showResetDialog = remember {
+            mutableStateOf(false)
         }
 
         Column(
@@ -99,7 +106,7 @@ fun LoginScreen(
         )
         Column(horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()) {
             BaseTextButton(label = "Forgot Password?") {
-
+                showResetDialog.value = true
             }
         }
         Spacer(modifier = Modifier.padding(16.dp))
@@ -112,6 +119,18 @@ fun LoginScreen(
                 pwd = pwd.value,
                 doLogin = doLogin,
                 registerUser = registerUser
+            )
+        }
+
+        if (showResetDialog.value ) {
+            ResetPasswordDialog(
+                onDismiss = {
+                    showResetDialog.value = false
+                    onResetPasswordDialogDismiss()
+                },
+                onConfirm = {
+                    resetPassword(it)
+                }
             )
         }
     }

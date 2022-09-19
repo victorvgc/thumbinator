@@ -17,4 +17,8 @@ class LoginRepositoryImpl @Inject constructor(private val dataSource: LoginDataS
         return dataSource.createUserWithEmail(loginUser)
     }
 
+    override suspend fun resetPassword(loginUser: LoginUser): Response<Boolean> {
+        return dataSource.resetPassword(loginUser)
+    }
+
 }

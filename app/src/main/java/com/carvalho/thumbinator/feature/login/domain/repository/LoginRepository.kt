@@ -8,4 +8,6 @@ interface LoginRepository {
     suspend fun doLogin(loginUser: LoginUser): Response<CurrentUser>
 
     suspend fun registerUser(loginUser: LoginUser): Response<CurrentUser>
+
+    suspend fun resetPassword(loginUser: LoginUser): Response<Boolean>
 }

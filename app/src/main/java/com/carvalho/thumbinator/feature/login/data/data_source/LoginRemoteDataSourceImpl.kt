@@ -7,7 +7,6 @@ import com.carvalho.thumbinator.feature.login.domain.model.LoginUser
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.coroutines.suspendCoroutine
 
 class LoginRemoteDataSourceImpl @Inject constructor(private val auth: FirebaseAuth) :
@@ -49,6 +48,34 @@ class LoginRemoteDataSourceImpl @Inject constructor(private val auth: FirebaseAu
                 }
                 .addOnCanceledListener {
                     continuation.resumeWith(Result.success(Response(errorMsg = "Login canceled, code: 03")))
+                }
+        }
+
+    override suspend fun resetPassword(loginUser: LoginUser): Response<Boolean> =
+        suspendCoroutine { continuation ->
+            auth.sendPasswordResetEmail(loginUser.username)
+                .addOnSuccessListener {
+                    continuation.resumeWith(Result.success(Response(true)))
+                }
+                .addOnFailureListener {
+                    continuation.resumeWith(
+                        Result.success(
+                            Response(
+                                false,
+                                it.message ?: "Reset failed, code: 04"
+                            )
+                        )
+                    )
+                }
+                .addOnCanceledListener {
+                    continuation.resumeWith(
+                        Result.success(
+                            Response(
+                                false,
+                                "Reset canceled, code: 05"
+                            )
+                        )
+                    )
                 }
         }
 

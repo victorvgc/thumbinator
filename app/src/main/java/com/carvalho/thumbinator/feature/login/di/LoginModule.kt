@@ -1,19 +1,17 @@
 package com.carvalho.thumbinator.feature.login.di
 
-import android.content.Context
 import com.carvalho.thumbinator.feature.login.data.data_source.LoginRemoteDataSourceImpl
 import com.carvalho.thumbinator.feature.login.data.repository.LoginRepositoryImpl
 import com.carvalho.thumbinator.feature.login.domain.data_source.LoginDataSource
 import com.carvalho.thumbinator.feature.login.domain.repository.LoginRepository
 import com.carvalho.thumbinator.feature.login.domain.use_case.DoLoginUseCase
 import com.carvalho.thumbinator.feature.login.domain.use_case.RegisterUserUseCase
-import com.google.firebase.FirebaseApp
+import com.carvalho.thumbinator.feature.login.domain.use_case.ResetPasswordUseCase
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -43,5 +41,10 @@ class LoginModule {
     @Provides
     fun providesRegisterUserUseCase(repository: LoginRepository): RegisterUserUseCase {
         return RegisterUserUseCase(repository)
+    }
+
+    @Provides
+    fun providesResetPasswordUseCase(repository: LoginRepository): ResetPasswordUseCase {
+        return ResetPasswordUseCase(repository)
     }
 }

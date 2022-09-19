@@ -9,7 +9,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -99,17 +98,16 @@ fun BaseTextFiled(
             }
         )
 
-        if (errorText.isNullOrEmpty().not() && errorText != null) {
-            Column(horizontalAlignment = Alignment.End) {
-                Text(
-                    text = errorText,
-                    style = TextStyle(
-                        fontSize = 14.sp,
-                        color = Color.Red,
-                        textAlign = TextAlign.End
-                    )
+        if (errorText.isNullOrEmpty().not()) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = errorText?: "Error",
+                style = TextStyle(
+                    fontSize = 14.sp,
+                    color = Color.Red,
+                    textAlign = TextAlign.End
                 )
-            }
+            )
         }
     }
 }

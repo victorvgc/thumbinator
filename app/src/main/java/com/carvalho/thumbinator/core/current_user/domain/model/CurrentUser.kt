@@ -5,4 +5,8 @@ data class CurrentUser(
     val email: String,
     val photoUrl: String?,
     val uid: String
-)
+) {
+    companion object {
+        val EMPTY = CurrentUser("","", "", "")
+    }
+}

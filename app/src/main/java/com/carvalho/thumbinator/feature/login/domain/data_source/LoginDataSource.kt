@@ -9,5 +9,7 @@ interface LoginDataSource {
         suspend fun signInWithEmail(loginUser: LoginUser): Response<CurrentUser>
 
         suspend fun createUserWithEmail(loginUser: LoginUser): Response<CurrentUser>
+
+        suspend fun resetPassword(loginUser: LoginUser): Response<Boolean>
     }
 }
