@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "644891850185",
+    "project_id": "thumbinator-80ca6",
+    "storage_bucket": "thumbinator-80ca6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644891850185:android:886507b40eebf660cca418",
+        "android_client_info": {
+          "package_name": "com.carvalho.thumbinator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "644891850185-3o807miuj08bas3g7mlcosu00b377aem.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXnXErkaZrRc-SeM7t6mYgNSK8EAF0eYE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "644891850185-3o807miuj08bas3g7mlcosu00b377aem.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
