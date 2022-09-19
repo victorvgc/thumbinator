@@ -3,8 +3,10 @@ package com.carvalho.thumbinator.core.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -22,26 +24,33 @@ import com.carvalho.thumbinator.R
 @ExperimentalMaterial3Api
 @Composable
 fun BaseTextFiled(
-    value: String = "",
+    modifier: Modifier = Modifier,
+    value: MutableState<String> = mutableStateOf(""),
     label: String = "",
-    isError: Boolean = false,
     errorText: String? = null,
     isPassword: Boolean = false,
+    maxLength: Int = -1,
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
     onTextChanged: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val textState = remember {
-            mutableStateOf(value)
+            value
         }
         val passwordVisible = remember {
             mutableStateOf(false)
         }
 
         OutlinedTextField(
-            modifier = Modifier.fillMaxWidth(),
+            keyboardActions = keyboardActions,
+            singleLine = true,
+            modifier = modifier.fillMaxWidth(),
             value = textState.value,
             shape = RoundedCornerShape(8.dp),
             onValueChange = {
+                if (maxLength != -1 && it.length > maxLength)
+                    return@OutlinedTextField
+
                 textState.value = it
                 onTextChanged(it)
             },
@@ -51,7 +60,7 @@ fun BaseTextFiled(
                 }
             },
             visualTransformation = if (passwordVisible.value.not() && isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-            isError = isError,
+            isError = errorText.isNullOrEmpty().not(),
             textStyle = TextStyle(fontSize = 16.sp),
             trailingIcon = {
                 if (textState.value.isNotEmpty()) {
@@ -81,11 +90,16 @@ fun BaseTextFiled(
                             }
                         }
                     )
+                } else if (errorText.isNullOrEmpty().not()) {
+                    Icon(
+                        painter = painterResource(R.drawable.ic_baseline_error_24),
+                        contentDescription = errorText
+                    )
                 }
             }
         )
 
-        if (isError && errorText != null) {
+        if (errorText.isNullOrEmpty().not() && errorText != null) {
             Column(horizontalAlignment = Alignment.End) {
                 Text(
                     text = errorText,
