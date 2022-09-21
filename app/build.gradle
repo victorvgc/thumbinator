@@ -72,10 +72,12 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.42")
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
 
-
     // Firebase
     implementation platform('com.google.firebase:firebase-bom:30.4.1')
     implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Splash
+    implementation("androidx.core:core-splashscreen:1.0.0")
 }
 
 kapt {
