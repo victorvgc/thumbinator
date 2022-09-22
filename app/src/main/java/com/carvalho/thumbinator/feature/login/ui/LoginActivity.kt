@@ -80,6 +80,16 @@ class LoginActivity : ComponentActivity() {
                             // todo: start home screen
                             if (currentState.data.isReset) {
                                 Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
+                                LoginScreen(
+                                    isLoading = false,
+                                    errorState = null,
+                                    userTextMutableState = viewModel.userState,
+                                    pwdTextMutableState = viewModel.pwdState,
+                                    viewModel::doLogin,
+                                    viewModel::registerUser,
+                                    viewModel::resetPassword,
+                                    viewModel::cancelResetPassword
+                                )
                             } else {
                                 LoadingScreen("Login Successful")
                             }
