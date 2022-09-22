@@ -16,35 +16,10 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AbstractLoginModule {
+abstract class LoginModule {
     @Binds
     abstract fun bindLoginRemoteDataSource(impl: LoginRemoteDataSourceImpl): LoginDataSource.Remote
 
     @Binds
     abstract fun bindLoginRepository(impl: LoginRepositoryImpl): LoginRepository
-}
-
-@Module
-@InstallIn(SingletonComponent::class)
-class LoginModule {
-
-    @Provides
-    fun providesFirebaseAuth(): FirebaseAuth {
-        return FirebaseAuth.getInstance()
-    }
-
-    @Provides
-    fun providesDoLoginUseCase(repository: LoginRepository): DoLoginUseCase {
-        return DoLoginUseCase(repository)
-    }
-
-    @Provides
-    fun providesRegisterUserUseCase(repository: LoginRepository): RegisterUserUseCase {
-        return RegisterUserUseCase(repository)
-    }
-
-    @Provides
-    fun providesResetPasswordUseCase(repository: LoginRepository): ResetPasswordUseCase {
-        return ResetPasswordUseCase(repository)
-    }
 }
