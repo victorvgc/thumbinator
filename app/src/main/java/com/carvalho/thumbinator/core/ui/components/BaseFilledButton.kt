@@ -10,23 +10,27 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @ExperimentalMaterial3Api
 @Composable
-fun BaseFilledButton(label: String, onClick: () -> Unit) {
+fun BaseFilledButton(modifier: Modifier = Modifier, label: String, onClick: () -> Unit) {
     Button(
+        modifier = modifier.padding(8.dp),
         onClick = onClick,
         shape = RoundedCornerShape(size = 200.dp),
-        modifier = Modifier.fillMaxWidth()
     ) {
         Text(
-            modifier = Modifier.padding(0.dp, 8.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp, 8.dp),
             text = label.uppercase(),
             style = TextStyle(
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center
             )
         )
     }
