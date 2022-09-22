@@ -105,11 +105,12 @@ fun LoginScreen(
             onTextChanged = { pwd.value = it }
         )
         Column(horizontalAlignment = Alignment.End, modifier = Modifier.fillMaxWidth()) {
-            BaseTextButton(label = "Forgot Password?") {
+            BaseTextButton(
+                label = "Forgot Password?"
+            ) {
                 showResetDialog.value = true
             }
         }
-        Spacer(modifier = Modifier.padding(16.dp))
         if (isLoading) {
             DisplayLoading()
         } else {
@@ -122,7 +123,7 @@ fun LoginScreen(
             )
         }
 
-        if (showResetDialog.value ) {
+        if (showResetDialog.value) {
             ResetPasswordDialog(
                 onDismiss = {
                     showResetDialog.value = false
@@ -150,11 +151,17 @@ private fun DisplayButtons(
         Spacer(modifier = Modifier.padding(8.dp))
     }
 
-    BaseFilledButton(label = "login") {
+    BaseFilledButton(
+        modifier = Modifier.fillMaxWidth(),
+        label = "login"
+    ) {
         doLogin(user, pwd)
     }
     Spacer(modifier = Modifier.padding(8.dp))
-    BaseOutlinedButton(label = "register") {
+    BaseOutlinedButton(
+        modifier = Modifier.fillMaxWidth(),
+        label = "register"
+    ) {
         registerUser(user, pwd)
     }
 }

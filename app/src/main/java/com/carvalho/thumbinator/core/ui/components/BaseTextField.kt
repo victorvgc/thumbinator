@@ -1,7 +1,9 @@
 package com.carvalho.thumbinator.core.ui.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.material3.*
@@ -30,6 +32,7 @@ fun BaseTextFiled(
     isPassword: Boolean = false,
     maxLength: Int = -1,
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    preRenderErrorText: Boolean = false,
     onTextChanged: (String) -> Unit
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -100,14 +103,18 @@ fun BaseTextFiled(
 
         if (errorText.isNullOrEmpty().not()) {
             Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = errorText?: "Error",
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp, vertical = 0.dp),
+                text = errorText ?: "Error",
                 style = TextStyle(
                     fontSize = 14.sp,
                     color = Color.Red,
                     textAlign = TextAlign.End
                 )
             )
+        } else if (preRenderErrorText) {
+            Spacer(modifier = Modifier.padding(10.dp))
         }
     }
 }

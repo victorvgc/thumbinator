@@ -1,13 +1,10 @@
 package com.carvalho.thumbinator.feature.login.ui
 
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import com.carvalho.thumbinator.core.ui.components.BaseFilledButton
-import com.carvalho.thumbinator.core.ui.components.BaseTextButton
+import com.carvalho.thumbinator.core.ui.components.BaseDialog
 import com.carvalho.thumbinator.core.ui.components.BaseTextFiled
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,6 +20,31 @@ fun ResetPasswordDialog(
         mutableStateOf("")
     }
 
+    BaseDialog(
+        title = "Reset your password",
+        positiveButtonText = "Reset",
+        negativeButtonText = "Cancel",
+        onNegativeClick = onDismiss,
+        onPositiveClick = {
+            if (email.value.trim().isNotEmpty()) {
+                onConfirm(email.value)
+            } else {
+                resetDialogError.value = "Email must not be empty"
+            }
+        },
+        onDismissRequest = onDismiss
+    ) {
+        BaseTextFiled(
+            value = email,
+            errorText = resetDialogError.value,
+            label = "Account email",
+            preRenderErrorText = true,
+            onTextChanged = {
+                email.value = it
+            })
+    }
+
+/*
     AlertDialog(
         onDismissRequest = onDismiss,
 
@@ -52,5 +74,5 @@ fun ResetPasswordDialog(
                 onDismiss()
             }
         }
-    )
+    )*/
 }
