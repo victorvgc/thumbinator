@@ -66,9 +66,6 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             resetPasswordUseCase(LoginUser(email, "")).collectLatest { state ->
                 _uiState.value = state
-
-                if (state.isSuccess)
-                    cancelResetPassword()
             }
         }
     }

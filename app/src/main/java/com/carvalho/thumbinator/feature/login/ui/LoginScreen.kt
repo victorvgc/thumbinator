@@ -114,8 +114,15 @@ fun LoginScreen(
         if (isLoading) {
             DisplayLoading()
         } else {
+            var error = ""
+            if (errorState?.validation.isNullOrEmpty().not())
+                error += "${errorState!!.validation}\n"
+
+            if (errorState?.resetPassword.isNullOrEmpty().not())
+                error += "${errorState!!.resetPassword}\n"
+
             DisplayButtons(
-                errorMsg = errorState?.validation,
+                errorMsg = error.trim(),
                 user = user.value,
                 pwd = pwd.value,
                 doLogin = doLogin,
