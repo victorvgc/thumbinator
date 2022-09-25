@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -14,12 +13,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.lifecycleScope
 import com.carvalho.thumbinator.core.ui.components.LogoHolder
 import com.carvalho.thumbinator.core.ui.theme.ThumbinatorTheme
-import com.carvalho.thumbinator.feature.login.ui.LoginActivity
+import com.carvalho.thumbinator.feature.thumb_list.ui.ThumbListActivity
 import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.random.Random
 
-@OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,7 +47,7 @@ class SplashActivity : ComponentActivity() {
         lifecycleScope.launchWhenCreated {
             delay(3000)
 
-            val intent = Intent(this@SplashActivity, LoginActivity::class.java)
+            val intent = Intent(this@SplashActivity, ThumbListActivity::class.java)
             startActivity(intent)
             finish()
         }

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.carvalho.thumbinator">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name=".MainApp"
         android:allowBackup="true"
@@ -29,6 +31,12 @@
 
         <activity
             android:name=".feature.login.ui.LoginActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Thumbinator" />
+
+        <activity
+            android:name=".feature.thumb_list.ui.ThumbListActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.Thumbinator" />
