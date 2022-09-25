@@ -1,4 +1,4 @@
-package com.carvalho.thumbinator.feature.login.ui
+package com.carvalho.thumbinator.core.ui.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -14,15 +14,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoadingScreen(msg: String? = null) {
+fun LoadingScreen(progress: Float = -1f) {
     Row(modifier = Modifier.fillMaxHeight(), verticalAlignment = Alignment.CenterVertically) {
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
-            if (msg.isNullOrEmpty()) {
-                CircularProgressIndicator(
-                    strokeWidth = 8.dp
-                )
-            } else {
-                Text(text = msg.uppercase(), style = TextStyle(fontSize = 18.sp))
+            CircularProgressIndicator(
+                strokeWidth = 8.dp
+            )
+            if (progress != -1f) {
+                Text(text = "$progress%", style = TextStyle(fontSize = 18.sp))
             }
         }
     }

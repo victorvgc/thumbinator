@@ -36,7 +36,7 @@
             android:theme="@style/Theme.Thumbinator" />
 
         <activity
-            android:name=".feature.thumb_list.ui.ThumbListActivity"
+            android:name=".feature.home.ui.HomeActivity"
             android:exported="false"
             android:label="@string/app_name"
             android:theme="@style/Theme.Thumbinator" />

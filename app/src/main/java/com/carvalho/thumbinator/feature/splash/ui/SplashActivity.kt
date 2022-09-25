@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.lifecycleScope
 import com.carvalho.thumbinator.core.ui.components.LogoHolder
 import com.carvalho.thumbinator.core.ui.theme.ThumbinatorTheme
-import com.carvalho.thumbinator.feature.thumb_list.ui.ThumbListActivity
+import com.carvalho.thumbinator.feature.home.ui.HomeActivity
 import kotlinx.coroutines.delay
 import java.util.*
 import kotlin.random.Random
@@ -47,7 +47,7 @@ class SplashActivity : ComponentActivity() {
         lifecycleScope.launchWhenCreated {
             delay(3000)
 
-            val intent = Intent(this@SplashActivity, ThumbListActivity::class.java)
+            val intent = Intent(this@SplashActivity, HomeActivity::class.java)
             startActivity(intent)
             finish()
         }

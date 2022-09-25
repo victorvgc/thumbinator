@@ -1,5 +1,6 @@
 package com.carvalho.thumbinator.feature.login.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -15,7 +16,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.carvalho.thumbinator.core.arch.state.BaseState
+import com.carvalho.thumbinator.core.ui.screens.LoadingScreen
 import com.carvalho.thumbinator.core.ui.theme.ThumbinatorTheme
+import com.carvalho.thumbinator.feature.home.ui.HomeActivity
+import com.carvalho.thumbinator.feature.home.ui.StubScreen
 import com.carvalho.thumbinator.feature.login.view_model.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -77,7 +81,6 @@ class LoginActivity : ComponentActivity() {
                             )
                         }
                         is BaseState.Success -> {
-                            // todo: start home screen
                             if (currentState.data.isReset) {
                                 Toast.makeText(this, "Email sent", Toast.LENGTH_SHORT).show()
                                 LoginScreen(
@@ -91,7 +94,10 @@ class LoginActivity : ComponentActivity() {
                                     viewModel::cancelResetPassword
                                 )
                             } else {
-                                LoadingScreen("Login Successful")
+                                Intent(this, HomeActivity::class.java).apply {
+                                    startActivity(this)
+                                    finish()
+                                }
                             }
                         }
                     }
