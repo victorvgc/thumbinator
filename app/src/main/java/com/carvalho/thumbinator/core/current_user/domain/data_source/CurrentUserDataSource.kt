@@ -8,5 +8,6 @@ class CurrentUserDataSource {
     interface Remote {
         suspend fun getCurrentUser(): Response<CurrentUser>
         suspend fun observeSession(): Flow<Response<CurrentUser>>
+        suspend fun logout()
     }
 }

@@ -16,4 +16,8 @@ class CurrentUserRepositoryImpl @Inject constructor(private val remote: CurrentU
     override suspend fun observeCurrentSession(): Flow<Response<CurrentUser>> {
         return remote.observeSession()
     }
+
+    override suspend fun logout() {
+        remote.logout()
+    }
 }
