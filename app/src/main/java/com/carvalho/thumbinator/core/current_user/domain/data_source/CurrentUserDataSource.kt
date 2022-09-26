@@ -6,10 +6,7 @@ import kotlinx.coroutines.flow.Flow
 
 class CurrentUserDataSource {
     interface Remote {
-        suspend fun observeSession(): Flow<Response<CurrentUser>>
-    }
-
-    interface Local {
         suspend fun getCurrentUser(): Response<CurrentUser>
+        suspend fun observeSession(): Flow<Response<CurrentUser>>
     }
 }
