@@ -5,6 +5,7 @@ import com.carvalho.thumbinator.core.current_user.domain.data_source.CurrentUser
 import com.carvalho.thumbinator.core.current_user.domain.model.CurrentUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import javax.inject.Inject
@@ -16,9 +17,18 @@ class RemoteCurrentUserDataSourceImpl @Inject constructor(private val auth: Fire
     }
 
     override suspend fun observeSession(): Flow<Response<CurrentUser>> = callbackFlow {
-        auth.addAuthStateListener {
-            trySend(getCurrentUserFromAuth(it.currentUser))
+        val listener =
+            FirebaseAuth.AuthStateListener { trySend(getCurrentUserFromAuth(it.currentUser)) }
+
+        auth.addAuthStateListener(listener)
+
+        awaitClose {
+            auth.removeAuthStateListener(listener)
         }
+    }
+
+    override suspend fun logout() {
+        auth.signOut()
     }
 
 

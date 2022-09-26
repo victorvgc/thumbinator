@@ -1,6 +1,7 @@
 package com.carvalho.thumbinator.feature.home.ui
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,8 +27,10 @@ import androidx.navigation.compose.rememberNavController
 import com.carvalho.thumbinator.core.arch.state.BaseState
 import com.carvalho.thumbinator.core.ui.screens.LoadingScreen
 import com.carvalho.thumbinator.core.ui.theme.ThumbinatorTheme
+import com.carvalho.thumbinator.feature.home.view_model.HomeFailure
 import com.carvalho.thumbinator.feature.home.view_model.HomeState
 import com.carvalho.thumbinator.feature.home.view_model.HomeViewModel
+import com.carvalho.thumbinator.feature.login.ui.LoginActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -35,6 +38,7 @@ class HomeActivity : ComponentActivity() {
 
     private val viewModel: HomeViewModel by viewModels()
 
+    @OptIn(ExperimentalMaterial3Api::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -54,8 +58,19 @@ class HomeActivity : ComponentActivity() {
                             else -> LoadingScreen(100f)
                         }
                     }
-                    else -> {
+                    is BaseState.Success -> {
                         MainScreen(viewModel)
+                    }
+                    is BaseState.Failure -> {
+                        when (current.error) {
+                            HomeFailure.FailedToLoadState -> MainScreen(viewModel = viewModel)
+                            HomeFailure.Logout -> {
+                                Intent(this, LoginActivity::class.java).apply {
+                                    startActivity(this)
+                                    finish()
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -82,8 +97,8 @@ fun MainScreen(viewModel: HomeViewModel) {
 fun BottomBar(navController: NavHostController) {
     val screens = listOf(
         BottomBarScreen.Home,
-        BottomBarScreen.Profile,
         BottomBarScreen.Statistics,
+        BottomBarScreen.Profile,
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination

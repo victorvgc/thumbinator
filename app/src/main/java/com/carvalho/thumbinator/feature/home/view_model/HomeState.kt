@@ -7,4 +7,5 @@ sealed class HomeState {
 
 sealed class HomeFailure {
     object FailedToLoadState: HomeFailure()
+    object Logout: HomeFailure()
 }

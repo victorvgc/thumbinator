@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carvalho.thumbinator.core.arch.state.BaseState
 import com.carvalho.thumbinator.core.current_user.domain.model.CurrentUser
+import com.carvalho.thumbinator.core.current_user.domain.use_case.LogoutUseCase
+import com.carvalho.thumbinator.core.current_user.domain.use_case.ObserveSessionUseCase
 import com.carvalho.thumbinator.core.thumbnail.domain.model.Thumbnail
 import com.carvalho.thumbinator.feature.thumb_list.domain.use_case.FetchThumbnailListUseCase
 import com.carvalho.thumbinator.feature.thumb_list.domain.use_case.GetThumbTagListUseCase
@@ -17,7 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val thumbnailListUseCase: FetchThumbnailListUseCase,
-    private val tagListUseCase: GetThumbTagListUseCase
+    private val tagListUseCase: GetThumbTagListUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val sessionUseCase: ObserveSessionUseCase
 ) : ViewModel() {
 
     companion object {
@@ -57,6 +61,22 @@ class HomeViewModel @Inject constructor(
         }
         loadStatistics()
         loadProfile()
+
+        viewModelScope.launch {
+            sessionUseCase().collectLatest {
+                when (it) {
+                    is BaseState.Loading -> {
+                        // do nothing
+                    }
+                    is BaseState.Success -> {
+                        // do nothing yet
+                    }
+                    else -> {
+                        _uiState.value = BaseState.Failure("Logged out", HomeFailure.Logout)
+                    }
+                }
+            }
+        }
     }
 
     private fun initProgressCounter() {
@@ -97,6 +117,12 @@ class HomeViewModel @Inject constructor(
 
     fun onThumbClick(thumbnail: Thumbnail) {
 
+    }
+
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase()
+        }
     }
 
     private fun evaluateLoading(): Boolean {

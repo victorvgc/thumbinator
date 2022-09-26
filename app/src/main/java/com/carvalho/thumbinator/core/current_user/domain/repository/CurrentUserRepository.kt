@@ -8,4 +8,6 @@ interface CurrentUserRepository {
     suspend fun getCurrentUser(): Response<CurrentUser>
 
     suspend fun observeCurrentSession(): Flow<Response<CurrentUser>>
+
+    suspend fun logout()
 }
